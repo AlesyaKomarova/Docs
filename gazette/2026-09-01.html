@@ -128,6 +128,27 @@ body{
 }
 .flash li b{font-weight:700}
 
+/* ─── Слежу ─────────────────────────────────────────── */
+.watch{margin-top:20px}
+.watch h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 10px;padding-bottom:7px;border-bottom:2px solid var(--ink);
+}
+.watch ul{list-style:none;margin:0;padding:0}
+.watch li{
+  display:grid;grid-template-columns:minmax(150px,auto) auto 1fr;gap:4px 16px;
+  align-items:baseline;padding:9px 0;border-bottom:1px solid var(--rule-hair);
+}
+.watch li:last-child{border-bottom:0}
+.watch b{font-size:calc(var(--fs) - 1.5px);font-weight:700}
+.watch .st{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--spot);border:1px solid var(--spot);padding:2px 7px;white-space:nowrap;
+}
+.watch .next{font-size:calc(var(--fs) - 2.5px);color:var(--ink-soft);line-height:1.45}
+
 /* ─── Главный разворот ──────────────────────────────── */
 .spread{
   display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);
@@ -256,6 +277,32 @@ article p:last-child{margin-bottom:0}
 .opp h4{font-size:calc(var(--fs) + 3px);margin:0 0 6px}
 .opp p{margin:0;font-size:calc(var(--fs) - 2px);line-height:1.55}
 
+/* ─── Дедлайн возможности ───────────────────────────── */
+.opp__until{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp);
+  display:inline-block;margin-left:10px;
+}
+
+/* ─── Архив ─────────────────────────────────────────── */
+.archive{margin-top:26px}
+.archive h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid var(--ink);
+}
+.archive ul{list-style:none;margin:0;padding:0}
+.archive li{
+  display:flex;gap:14px;align-items:baseline;
+  padding:6px 0;border-bottom:1px solid var(--rule-hair);
+  font-size:calc(var(--fs) - 2.5px);
+}
+.archive li:last-child{border-bottom:0}
+.archive .no{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;color:var(--stamp);white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+
 /* ─── Инсайт дня ────────────────────────────────────── */
 .insight{
   margin-top:48px;
@@ -325,6 +372,8 @@ article p:last-child{margin-bottom:0}
   .barometer{grid-template-columns:repeat(2,1fr);gap:18px}
   .barometer div:nth-child(odd){border-left:0;padding-left:0}
   .masthead__top{flex-direction:column;gap:5px;align-items:flex-start}
+  .watch li{grid-template-columns:auto 1fr}
+  .watch .next{grid-column:1/-1}
   .part__lede{margin-left:0;flex-basis:100%}
   .nav{gap:2px;padding:7px 0}
   .nav a{padding:5px 7px}
@@ -357,6 +406,16 @@ article p:last-child{margin-bottom:0}
       <li><time>31.08</time><span><b>США и Иран возобновили удары.</b> Нефть Brent выше $90, судоходство через Ормузский пролив сократилось, Россия продлила запрет на экспорт дизеля до конца сентября.</span></li>
       <li><time>Сег.</time><span><b>Рынок закладывает 66% на повышение ставки ФРС</b> — неделю назад было 40%. Техи, чипы и крипта под давлением.</span></li>
       <li><time>18.08</time><span><b>SEC предложила Regulation Crypto Assets</b> — первый профильный режим размещения криптоактивов. Идёт период публичных комментариев.</span></li>
+    </ul>
+  </section>
+
+  <section class="watch" aria-label="Открытые сюжеты">
+    <h3>Слежу</h3>
+    <ul>
+      <li><b>Персидский залив</b><span class="st">Обострение</span><span class="next">трафик через Ормуз и Brent двигаются первыми, риск-активы — за ними</span></li>
+      <li><b>Ставка ФРС</b><span class="st">Решение в сентябре</span><span class="next">рынок закладывает 66% на повышение — неделю назад было 40%</span></li>
+      <li><b>Правила SEC по крипте</b><span class="st">Комментарии открыты</span><span class="next">финальная редакция Regulation Crypto Assets формируется сейчас</span></li>
+      <li><b>Ротация BTC → ETH</b><span class="st">Продолжается</span><span class="next">август — первый месяц, когда приток в ETH-фонды обогнал биткоин</span></li>
     </ul>
   </section>
 
@@ -406,11 +465,11 @@ article p:last-child{margin-bottom:0}
   </div>
 
   <section class="barometer" aria-label="Цифры дня">
-    <div><span class="fig up">&gt;$90</span><span class="cap">Brent, после ударов в Заливе</span></div>
-    <div><span class="fig dn">$77,9K</span><span class="cap">биткоин, утро 1 сентября</span></div>
-    <div><span class="fig dn">$2 454</span><span class="cap">эфир, утро 1 сентября</span></div>
-    <div><span class="fig">66%</span><span class="cap">вероятность повышения ставки ФРС</span></div>
-    <div><span class="fig up">$3,87 млрд</span><span class="cap">приток в ETH-ETF за август</span></div>
+    <div><span class="fig up">&gt;$90</span><span class="cap">Brent · +2% за сутки</span></div>
+    <div><span class="fig dn">$77,9K</span><span class="cap">биткоин · −0,8% от открытия</span></div>
+    <div><span class="fig dn">$2 454</span><span class="cap">эфир · −0,5% от открытия</span></div>
+    <div><span class="fig">66%</span><span class="cap">ставка ФРС · неделю назад 40%</span></div>
+    <div><span class="fig up">$3,87 млрд</span><span class="cap">в ETH-ETF · впервые больше BTC</span></div>
   </section>
 
   <!-- ─────────── I. МИР ─────────── -->
@@ -632,6 +691,10 @@ article p:last-child{margin-bottom:0}
       <li><span class="when">9 сентября</span><span class="what">Презентация Apple: iPhone 18 Pro и складной iPhone Ultra — первый публичный экзамен нового CEO.</span></li>
     </ul>
   </section>
+
+  <!-- Архив: со следующего выпуска добавляй сюда строку предыдущего:
+       <li><span class="no">№ 001 · 1 сен</span><span>Ормузский пролив теперь определяет ставку ФРС</span></li>
+       Секцию с заголовком «Архив» показывай, только когда есть хотя бы одна строка. Храни последние 7. -->
 
   <footer class="colophon">
     <h3>Источники</h3>
