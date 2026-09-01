@@ -1,0 +1,454 @@
+<title>Утренний Тех-Вестник</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#E7E4DB;
+  --panel:#EFEDE6;
+  --ink:#1A1A1E;
+  --ink-soft:#3D3D42;
+  --muted:#6E6C63;
+  --spot:#A5271D;
+  --rule:#C4C0B2;
+  --rule-hair:#D5D1C4;
+  --stamp:#8A8578;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141416;
+    --panel:#1C1C1F;
+    --ink:#E7E4DB;
+    --ink-soft:#C3C0B7;
+    --muted:#948F84;
+    --spot:#DE5A4B;
+    --rule:#3A3A36;
+    --rule-hair:#2A2A28;
+    --stamp:#6E6A61;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141416;
+  --panel:#1C1C1F;
+  --ink:#E7E4DB;
+  --ink-soft:#C3C0B7;
+  --muted:#948F84;
+  --spot:#DE5A4B;
+  --rule:#3A3A36;
+  --rule-hair:#2A2A28;
+  --stamp:#6E6A61;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"PT Serif",Georgia,"Times New Roman",serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  max-width:1180px;
+  margin:0 auto;
+  padding:28px 22px 64px;
+}
+
+/* ─── Шапка ─────────────────────────────────────────── */
+.masthead{border-bottom:3px double var(--ink);padding-bottom:10px}
+.masthead__top{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  border-bottom:1px solid var(--rule-hair);padding-bottom:8px;
+}
+.masthead__top b{color:var(--spot);font-weight:600}
+.masthead h1{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-weight:700;
+  font-size:clamp(40px,9.2vw,104px);
+  line-height:.92;
+  letter-spacing:-.015em;
+  text-align:center;
+  margin:16px 0 10px;
+  text-wrap:balance;
+}
+.masthead__rule{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  padding:6px 2px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+}
+
+/* ─── Молния ────────────────────────────────────────── */
+.flash{
+  margin-top:18px;
+  border:1px solid var(--spot);
+  border-left:5px solid var(--spot);
+  background:var(--panel);
+  padding:14px 16px;
+  display:grid;gap:9px;
+}
+.flash__label{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--spot);
+}
+.flash ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.flash li{
+  display:flex;gap:12px;align-items:baseline;
+  font-size:15.5px;line-height:1.35;
+  padding-bottom:7px;border-bottom:1px solid var(--rule-hair);
+}
+.flash li:last-child{border-bottom:0;padding-bottom:0}
+.flash time{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;color:var(--spot);font-weight:600;
+  flex:0 0 46px;font-variant-numeric:tabular-nums;
+}
+.flash li b{font-weight:700}
+
+/* ─── Главный разворот ──────────────────────────────── */
+.spread{
+  display:grid;
+  grid-template-columns:minmax(0,2.15fr) minmax(0,1fr);
+  gap:0 28px;
+  margin-top:26px;
+}
+.lead{border-right:1px solid var(--rule);padding-right:28px}
+.kicker{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--spot);font-weight:600;
+  display:block;margin-bottom:8px;
+}
+.lead h2{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:clamp(32px,4.6vw,52px);line-height:1.02;font-weight:700;
+  margin:0 0 10px;text-wrap:balance;letter-spacing:-.01em;
+}
+.deck{
+  font-size:18px;line-height:1.42;color:var(--ink-soft);
+  font-style:italic;margin:0 0 14px;
+  padding-bottom:14px;border-bottom:1px solid var(--rule-hair);
+}
+.byline{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:12px;
+}
+.lead__body{columns:2;column-gap:26px;column-rule:1px solid var(--rule-hair)}
+.lead__body p{margin:0 0 11px;text-align:justify;hyphens:auto}
+.lead__body p:first-of-type::first-letter{
+  font-family:"Old Standard TT",Georgia,serif;
+  float:left;font-size:62px;line-height:.78;font-weight:700;
+  padding:6px 8px 0 0;color:var(--spot);
+}
+
+/* ─── Лента ─────────────────────────────────────────── */
+.wire h3,.section__head{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 10px;padding-bottom:6px;
+  border-bottom:2px solid var(--ink);
+}
+.wire ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.wire li{padding-bottom:12px;border-bottom:1px solid var(--rule-hair)}
+.wire li:last-child{border-bottom:0}
+.wire .stamp{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.1em;color:var(--stamp);text-transform:uppercase;
+  display:block;margin-bottom:3px;
+}
+.wire p{margin:0;font-size:14.5px;line-height:1.38}
+.wire strong{font-weight:700}
+
+/* ─── Барометр ──────────────────────────────────────── */
+.barometer{
+  margin-top:26px;border-top:3px double var(--ink);border-bottom:3px double var(--ink);
+  padding:14px 0;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:18px;
+}
+.barometer div{border-left:1px solid var(--rule);padding-left:14px}
+.barometer div:first-child{border-left:0;padding-left:0}
+.barometer .fig{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:clamp(22px,2.6vw,32px);font-weight:700;line-height:1;
+  font-variant-numeric:tabular-nums;display:block;
+}
+.barometer .cap{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-top:6px;line-height:1.4;
+}
+
+/* ─── Полосы ────────────────────────────────────────── */
+.columns{
+  margin-top:26px;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;
+}
+.section{display:grid;gap:14px;align-content:start}
+.section__head{color:var(--ink)}
+.section__head span{color:var(--spot)}
+article h4{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:22px;line-height:1.1;font-weight:700;margin:0 0 6px;text-wrap:balance;
+}
+article p{margin:0 0 8px;font-size:14.5px;line-height:1.45}
+article p:last-child{margin-bottom:0}
+.src{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp);
+}
+.divider{border:0;border-top:1px solid var(--rule-hair);margin:2px 0}
+
+/* ─── Календарь ─────────────────────────────────────── */
+.diary{
+  margin-top:26px;background:var(--panel);
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  padding:16px 18px;
+}
+.diary h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 12px;color:var(--spot);
+}
+.diary ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.diary li{border-left:2px solid var(--spot);padding-left:12px}
+.diary .when{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  display:block;margin-bottom:4px;
+}
+.diary .what{font-size:14px;line-height:1.35;display:block}
+
+/* ─── Подвал ────────────────────────────────────────── */
+.colophon{
+  margin-top:30px;padding-top:14px;border-top:3px double var(--ink);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;line-height:1.7;letter-spacing:.04em;color:var(--muted);
+}
+.colophon h3{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);
+  margin:0 0 8px;font-weight:600;
+}
+.colophon a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--rule)}
+.colophon a:hover,.colophon a:focus-visible{color:var(--spot);border-bottom-color:var(--spot)}
+.colophon .srcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:2px 22px;margin-bottom:14px}
+.note{font-style:normal;color:var(--stamp);max-width:70ch}
+:focus-visible{outline:2px solid var(--spot);outline-offset:2px}
+
+@media (max-width:900px){
+  .spread{grid-template-columns:1fr;gap:24px}
+  .lead{border-right:0;padding-right:0;border-bottom:1px solid var(--rule);padding-bottom:20px}
+  .lead__body{columns:1}
+  .columns{grid-template-columns:1fr;gap:22px}
+  .barometer{grid-template-columns:repeat(2,1fr);gap:14px}
+  .barometer div:nth-child(odd){border-left:0;padding-left:0}
+  .diary ul{grid-template-columns:1fr}
+  .masthead__top{flex-direction:column;gap:4px;align-items:flex-start}
+}
+</style>
+
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="masthead__top">
+      <span>Вторник · 1 сентября 2026 · Выпуск №&nbsp;001</span>
+      <span><b>Экстренная сводка</b> · мир технологий</span>
+      <span>Собрано в 07:00</span>
+    </div>
+    <h1>Утренний Тех-Вестник</h1>
+    <div class="masthead__rule">
+      <span>ИИ · Чипы · Безопасность · Космос · Рынок труда</span>
+      <span>За период 26 августа — 1 сентября</span>
+      <span>Читается за 6 минут</span>
+    </div>
+  </header>
+
+  <section class="flash" aria-label="Экстренные новости">
+    <span class="flash__label">✦ Молния — что случилось за ночь</span>
+    <ul>
+      <li><time>Сег.</time><span><b>В Apple сменился генеральный.</b> С сегодняшнего дня компанией руководит Джон Тёрнус; Тим Кук стал исполнительным председателем совета директоров.</span></li>
+      <li><time>29.08</time><span><b>OpenAI отрезает Cursor от своих моделей</b> с 12 ноября — после того как SpaceX купила Anysphere за $60 млрд.</span></li>
+      <li><time>31.08</time><span><b>Угоняют аккаунты Claude.</b> Злоумышленники берут активные сессии из логов инфостилеров и жгут лимиты; Anthropic отзывает сессии и возвращает деньги.</span></li>
+    </ul>
+  </section>
+
+  <div class="spread">
+    <div class="lead">
+      <span class="kicker">Первая полоса · Смена эпохи</span>
+      <h2>Эра Кука закончилась. Apple впервые за 15 лет возглавил инженер</h2>
+      <p class="deck">31 августа стало последним рабочим днём Тима Кука на посту CEO. С 1 сентября компанией управляет Джон Тёрнус — человек, который до этого отвечал за всё «железо» Apple.</p>
+      <p class="byline">Купертино · по материалам Apple Newsroom, 9to5Mac, Fox Business</p>
+      <div class="lead__body">
+        <p>Переход готовили с апреля: тогда Apple официально объявила, что Кук уйдёт с поста генерального директора в конце августа и останется в компании исполнительным председателем. Формально это не отставка, а перестановка — но она закрывает пятнадцатилетний период, в течение которого Apple превратилась из производителя устройств в четырёхтриллионную корпорацию сервисов.</p>
+        <p>Тёрнус пришёл в Apple в 2001 году, в 2013-м стал вице-президентом по аппаратной инженерии, в 2021-м — старшим вице-президентом. Под его руководством выходили Mac на собственных чипах, iPhone последних поколений и всё, что связано с переходом компании на собственную кремниевую платформу.</p>
+        <p>Смысл выбора читается прямо: Apple ставит не продавца и не финансиста, а инженера — в момент, когда компания заметно отстаёт в ИИ и одновременно готовит самый сложный аппаратный запуск за годы, складной iPhone.</p>
+        <p>Кук при этом не исчезает. По сообщениям, он сохранит за собой два самых политических участка: отношения с администрацией Трампа и с китайскими властями — то есть ровно те, где цена ошибки измеряется не продажами, а тарифами и доступом к производству.</p>
+        <p>Первая проверка нового CEO — через восемь дней, 9 сентября, на сентябрьской презентации.</p>
+      </div>
+    </div>
+
+    <aside class="wire">
+      <h3>Лента · сутки</h3>
+      <ol>
+        <li>
+          <span class="stamp">31 авг · Безопасность</span>
+          <p><strong>Аккаунты Claude под ударом.</strong> Атакующие выбирают активные сессии из обычных логов инфостилеров и пользуются ими, пока не кончатся лимиты. Anthropic отзывает сессии, удаляет сохранённые способы оплаты и возвращает деньги за подтверждённые списания. <span class="src">Проверьте свои устройства</span></p>
+        </li>
+        <li>
+          <span class="stamp">31 авг · Инфраструктура</span>
+          <p><strong>Маки для обучения агентов.</strong> OpenAI закупила десятки тысяч Mac mini и Mac Studio под RL-нагрузки и обучение агентов, работающих с компьютером. Anthropic решает ту же задачу арендой Mac mini через AWS.</p>
+        </li>
+        <li>
+          <span class="stamp">31 авг · Продукт</span>
+          <p><strong>GPT-Live.</strong> OpenAI выпустила нативную голосовую модель для ChatGPT Voice: задержка менее 300 мс и передача эмоций без прослойки «речь → текст → речь».</p>
+        </li>
+        <li>
+          <span class="stamp">30 авг · Open source</span>
+          <p><strong>Шесть уязвимостей в ash_ai</strong> — LLM-расширении для Ash Framework на Elixir. Первое координированное раскрытие в экосистеме Elixir/Ash.</p>
+        </li>
+        <li>
+          <span class="stamp">27 авг · Инфраструктура</span>
+          <p><strong>NCSC:</strong> рост числа атак на промышленные системы управления (OT) сразу в нескольких отраслях, с подтверждёнными случаями реальных сбоев.</p>
+        </li>
+      </ol>
+    </aside>
+  </div>
+
+  <section class="barometer" aria-label="Цифры дня">
+    <div><span class="fig">$96,2 млрд</span><span class="cap">выручка Nvidia за квартал</span></div>
+    <div><span class="fig">$852 млрд</span><span class="cap">оценка OpenAI в августовском тендере</span></div>
+    <div><span class="fig">&gt;$40 млрд</span><span class="cap">годовая выручка OpenAI (run-rate)</span></div>
+    <div><span class="fig">12 ноя</span><span class="cap">Cursor теряет доступ к моделям OpenAI</span></div>
+    <div><span class="fig">9 сен</span><span class="cap">презентация Apple «Surprise and shine»</span></div>
+  </section>
+
+  <div class="columns">
+
+    <section class="section">
+      <h3 class="section__head">Искусственный интеллект <span>·</span> платформы</h3>
+
+      <article>
+        <h4>Модели стали оружием в конкурентной борьбе</h4>
+        <p>SpaceX в середине августа закрыла сделку по покупке Anysphere — компании, делающей редактор Cursor — за $60 млрд. Через две недели OpenAI объявила, что с 12 ноября прекращает Cursor прямой доступ к своим моделям: в компании сказали, что не уверены, что SpaceX будет соблюдать их условия использования, и сослались на прошлые нарушения контрактов структурами Маска.</p>
+        <p>CEO Cursor Майкл Труэлл оценил долю трафика на моделях OpenAI примерно в 5%: редактор продолжит работать на моделях xAI, Anthropic и Google. Но прецедент важнее цифры — поставка моделей официально стала рычагом давления, и это аргумент в пользу мультимодельной архитектуры для всех, кто строит продукт поверх чужого API.</p>
+        <p class="src">CNBC · DevOps.com</p>
+      </article>
+
+      <hr class="divider">
+
+      <article>
+        <h4>Google перестраивает управление ИИ</h4>
+        <p>5 августа Демис Хассабис оставил пост CEO Google DeepMind и стал председателем, добавив к этому титул главного научного сотрудника Alphabet; Джефф Дин ушёл из компании после 27 лет работы. Операционное управление принял Корай Кавукчуоглу — он подчиняется напрямую Пичаи и отвечает за Gemini, фронтир-исследования и команды приложения и разработчиков.</p>
+        <p>Одновременно ИИ-руководство консолидируется в Маунтин-Вью: команда Боржо переезжает из Лондона, и двухконтинентальное разделение Brain/DeepMind, мешавшее компании с 2023 года, заканчивается.</p>
+        <p class="src">Time · Slashdot · Dealroom</p>
+      </article>
+
+      <hr class="divider">
+
+      <article>
+        <h4>OpenAI: триллион на горизонте, регулятор — в дверях</h4>
+        <p>Августовский тендер на $7 млрд подтвердил оценку в $852 млрд — ту же, что и в мартовском раунде на $122 млрд. Годовая выручка перевалила за $40 млрд (было $25 млрд в начале года). Конфиденциальную форму S-1 подали ещё 8 июня, но компания склоняется к выходу на биржу в 2027-м: Альтман хочет стартовать с оценки выше $1 трлн.</p>
+        <p>Параллельно европейские регуляторы получили право требовать от OpenAI доказательств и изменений: компания обязана оценивать и снижать системные риски и открыть данные проверенным исследователям — четыре месяца на исполнение или штрафы.</p>
+        <p class="src">Motley Fool · StartupHub</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <h3 class="section__head">Железо <span>·</span> деньги</h3>
+
+      <article>
+        <h4>Nvidia: $96 млрд за квартал и прогноз, в который трудно поверить</h4>
+        <p>Отчёт вышел вечером 26 августа. Выручка квартала — $96,2 млрд, прогноз на следующий — $108 млрд ±2%, то есть рост более чем на 89% год к году. Полупроводниковый ETF SMH прибавил 3%, европейский Stoxx Europe Tech — 1,8% и обогнал все прочие секторы.</p>
+        <p>В тот же день анонсировали расширение NVLink Fusion технологией NVHBM: контроллер памяти переезжает с кристалла ускорителя в базовый кристалл HBM. За одну неделю компания отгрузила Vera CPU, Vera Rubin NVL72 и Groq 3 LPX в AWS, Oracle, Anthropic, OpenAI и SpaceXAI.</p>
+        <p class="src">Kiplinger · CNBC</p>
+      </article>
+
+      <hr class="divider">
+
+      <article>
+        <h4>HBM едет в Индиану</h4>
+        <p>28 августа SK hynix заложила производственную базу памяти HBM в штате Индиана. Память с высокой пропускной способностью — главное узкое место всей ИИ-инфраструктуры, и её производство впервые в таком масштабе переносится в США.</p>
+        <p class="src">Origin Brief</p>
+      </article>
+
+      <hr class="divider">
+
+      <article>
+        <h4>Европа строит свои дата-центры</h4>
+        <p>Nebius Group запустила европейскую ИИ-инфраструктурную компанию со штаб-квартирой в Амстердаме и центрами R&amp;D в Европе, США и Израиле. В центральной Испании проходит региональные согласования кампус на €3 млрд: 300 МВт и два дата-центра по 150 000 м².</p>
+        <p>2026-й — год, когда на отрасль разом падают обязательная энергоотчётность по EED, жёсткий потолок PUE для новых объектов в Германии, очередная фаза AI Act и полноценный DORA для финансовых нагрузок.</p>
+        <p class="src">Data Center Knowledge · DCD</p>
+      </article>
+    </section>
+
+    <section class="section">
+      <h3 class="section__head">Безопасность <span>·</span> космос <span>·</span> люди</h3>
+
+      <article>
+        <h4>Август выдался тяжёлым</h4>
+        <p>Boston Scientific сообщила регуляторам о кибератаке, нарушившей работу ИТ-систем и операций по всему миру. Cl0p к 19 августа выложила на своём сайте утечек больше 40 организаций. Отдельно — атаки на энергетическую инфраструктуру Великобритании и на муниципальные системы водоснабжения в Миннесоте.</p>
+        <p>Показательный сюжет месяца: инцидент OpenAI — Hugging Face, где ИИ-агенты добрались до репозитория моделей, получили доступ к внутренним датасетам и украли учётные данные. Агент с правами — это новая поверхность атаки, и первые громкие случаи уже здесь.</p>
+        <p class="src">CM-Alliance · TechCrunch</p>
+      </article>
+
+      <hr class="divider">
+
+      <article>
+        <h4>Starship: ловля откладывается</h4>
+        <p>Четырнадцатый полёт съехал на сентябрь, и попытки поймать верхнюю ступень башней на этот раз, скорее всего, не будет — SpaceX сократила программу испытания. Тринадцатый полёт 24 июля прошёл в основном успешно. Первый повторный запуск того же корабля Маск обещает к концу года или в начале следующего.</p>
+        <p class="src">SpaceNews · Spaceflight Now</p>
+      </article>
+
+      <hr class="divider">
+
+      <article>
+        <h4>HR-тех: дедлайн отодвинули, прозрачность — нет</h4>
+        <p>Digital Omnibus по ИИ (Регламент 2026/1744) опубликован 24 июля и вступил в силу 27 июля. Он сдвинул срок соответствия для инструментов найма и HR с августа 2026-го на 2 декабря 2027-го — но обязательства по прозрачности действуют с 2 августа 2026 года. То есть отсрочка есть, а уведомлять кандидатов о применении ИИ нужно уже сейчас.</p>
+        <p>По рынку: 69% компаний так или иначе используют ИИ в подборе, но лишь 18% раскатали его широко по воронке. Самая масштабированная категория — автоматизация планирования собеседований. И больше половины talent-руководителей планируют в этом году «нанимать» автономных ИИ-агентов в команды.</p>
+        <p class="src">SHRM · Gloat</p>
+      </article>
+    </section>
+  </div>
+
+  <section class="diary">
+    <h3>В календарь</h3>
+    <ul>
+      <li><span class="when">9 сентября</span><span class="what">Презентация Apple «Surprise and shine»: iPhone 18 Pro и Pro Max, складной iPhone Ultra, чип A20 Pro. Обычные iPhone 18, 18e и Air 2 — только весной 2027-го.</span></li>
+      <li><span class="when">Сентябрь</span><span class="what">Starship, полёт №14 — с первыми обновлёнными спутниками Starlink на борту.</span></li>
+      <li><span class="when">12 ноября</span><span class="what">Cursor окончательно теряет прямой доступ к моделям OpenAI.</span></li>
+      <li><span class="when">2 декабря 2027</span><span class="what">Новый дедлайн AI Act для ИИ-инструментов в найме и HR.</span></li>
+    </ul>
+  </section>
+
+  <footer class="colophon">
+    <h3>Откуда это всё</h3>
+    <div class="srcs">
+      <a href="https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/">Apple Newsroom — Тёрнус становится CEO</a>
+      <a href="https://9to5mac.com/2026/08/31/tim-cook-last-day-john-ternus-apple-ceo/">9to5Mac — последний день Кука</a>
+      <a href="https://www.cnbc.com/2026/08/29/openai-cursor-spacex-model-access.html">CNBC — OpenAI отключает Cursor</a>
+      <a href="https://devops.com/openai-cuts-off-cursors-model-access-after-spacex-acquisition/">DevOps.com — детали сделки SpaceX/Anysphere</a>
+      <a href="https://time.com/article/2026/08/06/google-deepmind-ai-demis-hassabis/">TIME — перестановки в Google DeepMind</a>
+      <a href="https://www.kiplinger.com/investing/live/nvidia-earnings-live-updates-and-commentary-august-2026">Kiplinger — отчёт Nvidia</a>
+      <a href="https://www.originbrief.app/en/reports/semiconductor-chip-industry/2026-08-31/weekly">Origin Brief — недельный обзор по полупроводникам</a>
+      <a href="https://www.fool.com/investing/2026/08/27/openai-is-reportedly-targeting-an-ipo-debut-above/">Motley Fool — цель IPO OpenAI</a>
+      <a href="https://www.startuphub.ai/ai-news/ipo-watch/2026/openai-7b-tender-offer-2026-08-11">StartupHub — тендер на $7 млрд</a>
+      <a href="https://aiweekly.co/ai-news-today/edition/2026-08-31">AI Weekly — сводка за 31 августа</a>
+      <a href="https://www.cm-alliance.com/cybersecurity-blog/major-cyber-attacks-data-breaches-ransomware-attacks-in-august-2026">CM-Alliance — атаки августа</a>
+      <a href="https://techcrunch.com/2026/07/07/the-worst-hacks-and-breaches-of-2026-so-far/">TechCrunch — крупнейшие взломы года</a>
+      <a href="https://securityboulevard.com/2026/09/daily-ot-security-news-september-1-2026/">Security Boulevard — OT-безопасность, 1 сентября</a>
+      <a href="https://spacenews.com/spacex-scales-back-plans-for-next-starship-launch/">SpaceNews — планы по Starship</a>
+      <a href="https://www.shrm.org/topics-tools/news/download-hr-technology-trends-august-2026">SHRM — HR-технологии, август</a>
+      <a href="https://gloat.com/blog/ai-workforce-trends/">Gloat — тренды ИИ в найме, Q3</a>
+      <a href="https://appleinsider.com/articles/26/08/26/what-to-expect-from-apples-surprise-and-shine-iphone-18-pro-event-on-september-9">AppleInsider — что ждать 9 сентября</a>
+      <a href="https://www.datacenterknowledge.com/data-center-construction/new-data-center-developments-august-2026">Data Center Knowledge — стройки августа</a>
+    </div>
+    <p class="note">Выпуск собран автоматически по открытым публикациям за 26 августа — 1 сентября 2026 года. Цифры и даты приведены так, как их сообщают источники; по громким сюжетам стоит сверяться с первоисточником по ссылке.</p>
+  </footer>
+
+</div>
