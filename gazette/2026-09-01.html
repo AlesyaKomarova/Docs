@@ -228,7 +228,7 @@ article p:last-child{margin-bottom:0}
 }
 .divider{border:0;border-top:1px solid var(--rule-hair);margin:2px 0}
 
-/* ─── Полоса «Ваш рынок» ────────────────────────────── */
+/* ─── Полоса «Профессия» ────────────────────────────── */
 .band{margin-top:26px}
 .band__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:14px}
 .band h5{
@@ -236,7 +236,32 @@ article p:last-child{margin-bottom:0}
   font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--spot);
   margin:0 0 5px;font-weight:600;
 }
-.band p{margin:0;font-size:14.5px;line-height:1.45}
+.band p{margin:0 0 8px;font-size:14.5px;line-height:1.45}
+.band p:last-child{margin-bottom:0}
+
+/* ─── Инсайт дня ────────────────────────────────────── */
+.insight{
+  margin-top:26px;
+  border-top:3px double var(--ink);border-bottom:3px double var(--ink);
+  padding:16px 0;
+}
+.insight h3{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:26px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em;
+}
+.insight__sub{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 14px;
+}
+.insight__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.insight__grid > div{border-left:2px solid var(--spot);padding-left:14px}
+.insight h6{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--spot);
+  margin:0 0 5px;font-weight:600;
+}
+.insight p{margin:0;font-size:14.5px;line-height:1.45}
 
 /* ─── Календарь ─────────────────────────────────────── */
 .diary{
@@ -278,7 +303,7 @@ article p:last-child{margin-bottom:0}
   .spread{grid-template-columns:1fr;gap:24px}
   .lead{border-right:0;padding-right:0;border-bottom:1px solid var(--rule);padding-bottom:20px}
   .lead__body{columns:1}
-  .columns,.band__grid{grid-template-columns:1fr;gap:22px}
+  .columns,.band__grid,.insight__grid{grid-template-columns:1fr;gap:22px}
   .barometer{grid-template-columns:repeat(2,1fr);gap:14px}
   .barometer div:nth-child(odd){border-left:0;padding-left:0}
   .diary ul{grid-template-columns:1fr}
@@ -291,12 +316,12 @@ article p:last-child{margin-bottom:0}
   <header class="masthead">
     <div class="masthead__top">
       <span>Вторник · 1 сентября 2026 · Выпуск №&nbsp;001</span>
-      <span><b>Мировые рынки · Стратегии · Капитал</b></span>
+      <span><b>Мировые рынки · Стратегии · Капитал · Профессия</b></span>
       <span>Собрано в 07:00</span>
     </div>
     <h1>Утренний Тех-Вестник</h1>
     <div class="masthead__rule">
-      <span>Рынки и крипта · Стратегии корпораций · Капитал и стартапы · Ваш рынок</span>
+      <span>Рынки и крипта · Стратегии корпораций · Капитал и стартапы · Профессия</span>
       <span>Данные на утро 1 сентября</span>
       <span>Читается за 7 минут</span>
     </div>
@@ -449,20 +474,45 @@ article p:last-child{margin-bottom:0}
     </section>
   </div>
 
-  <section class="band" aria-label="Ваш рынок">
-    <h3 class="section__head">Ваш рынок <span>·</span> HR-tech, КЕП, конкуренты</h3>
+  <section class="band" aria-label="Профессия">
+    <h3 class="section__head">Профессия <span>·</span> как меняется ремесло</h3>
     <div class="band__grid">
       <div>
-        <h5>Сегодня · Продукт</h5>
-        <p>С 1 сентября новые КЕП формируются только по стандарту «Купина» (ДСТУ 7564:2014) вместо ГОСТ 34.311-95. Ранее выданные подписи действуют до конца срока, но информационные системы должны были обновиться к сегодняшнему дню — Казначейство требовало этого от своих клиентов прямо. Проверить: криптобиблиотеки, верификацию старых подписей, поведение интерфейса при несовпадении алгоритма.</p>
+        <h5>Роль</h5>
+        <p>Продуктовая роль не исчезает, а перераспределяет время: меньше документации, синтеза и рутинного ресёрча — больше суждения, стратегии и работы с клиентом. Опросы дают цифру: 59% считают стратегию и бизнес-мышление главными навыками на ближайшие два-три года, а число вакансий с требованием свободного владения ИИ выросло примерно в семь раз с 2024 по 2026 год.</p>
+        <p>Растёт и техническая планка: выбор модели, построение эвалов и просчёт стоимости вызовов API перестали быть инженерной территорией.</p>
+        <p class="src">Product Leadership · CleverX</p>
       </div>
       <div>
-        <h5>Конкуренты</h5>
-        <p>«Вчасно» выделила кадровый документооборот в отдельный продукт «Вчасно.Кадри» — то есть в зоне согласований, Приёма и Переведення у конкурента теперь отдельная команда и свой темп релизов. PeopleForce после раунда $5,4 млн вкладывается в Польшу и ЛАТАМ, оставляя украинский enterprise без своего основного внимания.</p>
+        <h5>Организация</h5>
+        <p>Границы ролей размываются: продакт обязан говорить на языке дизайна, глубоко понимать данные, представлять, как устроена модель, и иметь позицию по дистрибуции и цене. Инженеры при этом придвинулись к дискавери и разговорам с клиентами.</p>
+        <p>Отрезвляющая цифра для руководителя: средний продуктовый лидер тратит больше 66% недели на ручную работу — сбор апдейтов, компиляцию инсайтов, повторяющуюся документацию. Это и есть первый кандидат на автоматизацию, причём не ради экономии, а ради возвращения времени в стратегию.</p>
+        <p class="src">airfocus · Product School</p>
       </div>
       <div>
-        <h5>Регуляторика</h5>
-        <p>Digital Omnibus перенёс дедлайн AI Act для инструментов найма на 2 декабря 2027 года, но требования прозрачности действуют с 2 августа 2026-го — уведомление кандидата и сотрудника об участии ИИ нужно закладывать в интерфейс уже сейчас. Глобально HiBob покупает payroll-сервис Pento: расчёт зарплаты уезжает внутрь HCM-платформ.</p>
+        <h5>Реальность внедрений</h5>
+        <p>ИИ используют 88% организаций хотя бы в одной функции, но масштабируют агентов только 23%. Восемьдесят процентов корпоративных приложений встраивают агента, в продакшене работает 31%, а 88% пилотов не доходят до релиза. Широко цитируемое исследование MIT: 95% корпоративных пилотов генеративного ИИ не дали измеримой финансовой отдачи.</p>
+        <p>Зато там, где доходит: медианная окупаемость агентов в продажах — 3,4 месяца при доле ручного вмешательства 8%, а у команд с кодинг-агентами MIT Sloan зафиксировал плюс 14% выпущенных функций на инженера за квартал.</p>
+        <p class="src">MIT · Gartner · PwC</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="insight" aria-label="Инсайт дня">
+    <h3>Инсайт дня</h3>
+    <p class="insight__sub">Три сюжета выпуска, которые складываются в один вывод</p>
+    <div class="insight__grid">
+      <div>
+        <h6>Дефицит переехал</h6>
+        <p>Год назад узким местом были чипы — сегодня электричество. Раунд A на $150 млн при оценке в миллиард под управление энергопотреблением ЦОД, 100 ГВт новых мощностей до 2030 года и признание инвесторов, что доступность энергии определяет решение сильнее спроса, — это одна история, рассказанная с трёх сторон. Следующие крупные компании цикла вырастут не в моделях, а в слое между вычислениями и энергосетью.</p>
+      </div>
+      <div>
+        <h6>Цену двигает право, а не технология</h6>
+        <p>Приток в эфирные ETF обогнал биткоин не из-за апгрейда протокола, а из-за закона о стейблкоинах. Правовая скидка на американские криптоактивы снимается предложением SEC, а не релизом. Практический вывод для того, кто следит за рынками: календарь регуляторных дат сейчас предсказывает движение лучше, чем календарь релизов.</p>
+      </div>
+      <div>
+        <h6>Ценность сместилась к дисциплине</h6>
+        <p>88% пилотов не доходят до продакшена, 95% не дают измеримой отдачи — но там, где доходят, окупаемость измеряется месяцами. Значит, дефицитный ресурс — уже не идея применения ИИ и не доступ к модели, а способность довести узкий, хорошо управляемый сценарий до продакшена. Это же и есть самое дорогое умение продуктового руководителя в 2026 году.</p>
       </div>
     </div>
   </section>
@@ -472,8 +522,8 @@ article p:last-child{margin-bottom:0}
     <ul>
       <li><span class="when">Сентябрь</span><span class="what">Заседание ФРС — рынок закладывает 66% на повышение. Главное событие месяца для всех риск-активов.</span></li>
       <li><span class="when">Идёт сейчас</span><span class="what">Публичные комментарии к Regulation Crypto Assets — окно, в котором формируется финальная редакция правил.</span></li>
-      <li><span class="when">9 сентября</span><span class="what">Презентация Apple: iPhone 18 Pro и складной iPhone Ultra.</span></li>
-      <li><span class="when">12 ноября</span><span class="what">Cursor теряет доступ к моделям OpenAI — пример риска зависимости от одного вендора.</span></li>
+      <li><span class="when">9 сентября</span><span class="what">Презентация Apple: iPhone 18 Pro и складной iPhone Ultra — тест спроса на премиальный сегмент.</span></li>
+      <li><span class="when">12 ноября</span><span class="what">Cursor теряет доступ к моделям OpenAI — учебный кейс о зависимости от одного вендора.</span></li>
     </ul>
   </section>
 
@@ -495,11 +545,15 @@ article p:last-child{margin-bottom:0}
       <a href="https://techstartups.com/2026/08/26/startup-funding-news-today-august-26-2026-emerald-ai-gatik-stellaria-more/">Tech Startups — раунды Emerald AI и Gatik</a>
       <a href="https://techstartups.com/2026/08/25/venture-capital-startup-funding-roundup-august-25-2026-aramco-ventures-ark-invest-salesforce-ventures-samsung-ventures-siemens-more/">Tech Startups — сводка по венчуру</a>
       <a href="https://thebusinessperspective.com/ai-startups-that-raised-funding-in-august-2026/">The Business Perspective — крупнейшие ИИ-раунды августа</a>
-      <a href="https://news.dtkt.ua/accounting/automation/113462-ecp-vidavatimut-po-novomu-z-1-veresnia-2026-roku-kmu-ostatocno-sxvaliv-algoritm-kupina">Дебет-Кредит — переход КЕП на «Купину»</a>
-      <a href="https://dev.ua/news/vchasno-tsyfrovizatsia-kadrovykh-dokumentiv">dev.ua — новый сервис «Вчасно»</a>
-      <a href="https://vctr.media/ua/raund-na-54-mln-peopleforce-zaluchyla-investycziyi-dlya-zrostannya-rynkah-polshhi-ta-latam-267548/">Vector — раунд PeopleForce</a>
-      <a href="https://www.techtarget.com/searchhrsoftware/news/366570816/HR-tech-market-now-more-competitive-with-HiBobs-acquisition">TechTarget — HiBob покупает Pento</a>
       <a href="https://www.kiplinger.com/investing/live/nvidia-earnings-live-updates-and-commentary-august-2026">Kiplinger — отчёт Nvidia</a>
+      <a href="https://www.productleadership.com/blog/how-ai-is-changing-product-management/">Product Leadership — как ИИ меняет продуктовую работу</a>
+      <a href="https://cleverx.com/blog/how-ai-is-changing-the-product-manager-role-in-2026/">CleverX — навыки продакта в 2026</a>
+      <a href="https://airfocus.com/blog/product-management-trends/">airfocus — тренды продуктового управления</a>
+      <a href="https://productschool.com/blog/product-fundamentals/product-management-trends">Product School — сдвиги профессии</a>
+      <a href="https://joget.com/ai-agent-adoption-in-2026-what-the-analysts-data-shows/">Joget — данные Gartner и IDC по агентам</a>
+      <a href="https://writer.com/blog/enterprise-ai-adoption-2026/">Writer — почему буксует корпоративное внедрение</a>
+      <a href="https://www.digitalapplied.com/blog/ai-agent-adoption-2026-enterprise-data-points">Digital Applied — 120+ метрик внедрения агентов</a>
+      <a href="https://www.simoncross.com/p/reading-list-2026">Simon Cross — список чтения продакта на 2026</a>
     </div>
     <p class="note">Выпуск собран автоматически по открытым публикациям на утро 1 сентября 2026 года. Котировки приведены на момент, указанный в источнике, и к моменту чтения уже изменились — сверяйтесь с биржей. Прогнозные уровни принадлежат цитируемым аналитикам. Это обзор рынка, а не инвестиционная рекомендация: решения о сделках вы принимаете сами.</p>
   </footer>
