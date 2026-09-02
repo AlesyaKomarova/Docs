@@ -1,0 +1,823 @@
+<title>Сегодня</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  /* размер текста — переключается кнопкой, помнится в браузере */
+  --fs:17.5px;
+
+  --paper:#EAE6DC;
+  --panel:#F2EFE7;
+  --ink:#23221F;
+  --ink-soft:#464440;
+  --muted:#6F6C63;
+  --spot:#A5271D;
+  --rule:#CBC6B7;
+  --rule-hair:#DAD5C8;
+  --stamp:#8C8779;
+  --up:#1F6B4A;
+  --down:#A5271D;
+}
+:root[data-size="l"]{--fs:20px}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#16161A;
+    --panel:#1E1E22;
+    --ink:#E4E0D6;
+    --ink-soft:#BFBCB3;
+    --muted:#918C82;
+    --spot:#E06554;
+    --rule:#3B3B37;
+    --rule-hair:#2B2B29;
+    --stamp:#726D64;
+    --up:#63C494;
+    --down:#E06554;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#16161A;
+  --panel:#1E1E22;
+  --ink:#E4E0D6;
+  --ink-soft:#BFBCB3;
+  --muted:#918C82;
+  --spot:#E06554;
+  --rule:#3B3B37;
+  --rule-hair:#2B2B29;
+  --stamp:#726D64;
+  --up:#63C494;
+  --down:#E06554;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"PT Serif",Georgia,"Times New Roman",serif;
+  font-size:var(--fs);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.sheet{max-width:1080px;margin:0 auto;padding:0 24px 72px}
+
+/* ─── Панель навигации ──────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:20;
+  background:var(--paper);
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  padding:9px 0;margin-bottom:20px;
+}
+.nav a,.nav button{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  padding:5px 9px;border:1px solid transparent;border-radius:2px;
+  background:none;cursor:pointer;line-height:1;
+}
+.nav a:hover,.nav a:focus-visible{color:var(--spot);border-color:var(--rule)}
+.nav a b{color:var(--spot);font-weight:600;margin-right:5px}
+.nav button{margin-left:auto;border-color:var(--rule);color:var(--ink-soft)}
+.nav button:hover{color:var(--spot);border-color:var(--spot)}
+
+/* ─── Шапка ─────────────────────────────────────────── */
+.masthead{border-bottom:3px double var(--ink);padding-bottom:12px}
+.masthead__top{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  border-bottom:1px solid var(--rule-hair);padding-bottom:9px;
+}
+.masthead__top b{color:var(--spot);font-weight:600}
+.masthead h1{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-weight:400;font-size:clamp(38px,7.6vw,80px);
+  line-height:1;letter-spacing:.005em;text-align:center;
+  margin:22px 0 16px;text-wrap:balance;
+  font-variant-numeric:lining-nums;
+}
+
+/* ─── Молния ────────────────────────────────────────── */
+.flash{
+  margin-top:24px;
+  border:1px solid var(--spot);border-left:5px solid var(--spot);
+  background:var(--panel);padding:18px 20px;
+  display:grid;gap:12px;
+}
+.flash__label{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--spot);
+}
+.flash ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.flash li{
+  display:flex;gap:14px;align-items:baseline;
+  font-size:calc(var(--fs) - .5px);line-height:1.5;
+  padding-bottom:11px;border-bottom:1px solid var(--rule-hair);
+}
+.flash li:last-child{border-bottom:0;padding-bottom:0}
+.flash time{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;color:var(--spot);font-weight:600;
+  flex:0 0 48px;font-variant-numeric:tabular-nums;
+}
+.flash li b{font-weight:700}
+
+/* ─── Слежу ─────────────────────────────────────────── */
+.watch{margin-top:20px}
+.watch h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 10px;padding-bottom:7px;border-bottom:2px solid var(--ink);
+}
+.watch ul{list-style:none;margin:0;padding:0}
+.watch li{
+  display:grid;grid-template-columns:minmax(150px,auto) auto 1fr;gap:4px 16px;
+  align-items:baseline;padding:9px 0;border-bottom:1px solid var(--rule-hair);
+}
+.watch li:last-child{border-bottom:0}
+.watch b{font-size:calc(var(--fs) - 1.5px);font-weight:700}
+.watch .st{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--spot);border:1px solid var(--spot);padding:2px 7px;white-space:nowrap;
+}
+.watch .next{font-size:calc(var(--fs) - 2.5px);color:var(--ink-soft);line-height:1.45}
+
+/* ─── Главный разворот ──────────────────────────────── */
+.spread{
+  display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);
+  gap:0 36px;margin-top:34px;
+}
+.lead{border-right:1px solid var(--rule);padding-right:36px}
+
+.lead h2{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:clamp(32px,4.4vw,50px);line-height:1.08;font-weight:700;
+  margin:0 0 14px;text-wrap:balance;letter-spacing:-.008em;
+}
+.deck{
+  font-size:calc(var(--fs) + 2px);line-height:1.55;color:var(--ink-soft);
+  font-style:italic;margin:0 0 18px;
+  padding-bottom:18px;border-bottom:1px solid var(--rule-hair);
+}
+.byline{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:18px;
+}
+.lead__body p{margin:0 0 15px;max-width:66ch}
+.lead__body p:first-of-type::first-letter{
+  font-family:"Old Standard TT",Georgia,serif;
+  float:left;font-size:66px;line-height:.76;font-weight:700;
+  padding:8px 10px 0 0;color:var(--spot);
+}
+
+/* ─── Врезка «что это значит» ───────────────────────── */
+.take{
+  margin:18px 0 0;border-left:3px solid var(--spot);
+  background:var(--panel);padding:14px 18px;break-inside:avoid;
+}
+.take b{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--spot);
+  display:block;margin-bottom:6px;font-weight:600;
+}
+.take span{font-size:calc(var(--fs) - 1.5px);line-height:1.55;display:block}
+
+/* ─── Лента ─────────────────────────────────────────── */
+.wire h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 14px;padding-bottom:7px;border-bottom:2px solid var(--ink);
+}
+.wire ol{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.wire li{padding-bottom:16px;border-bottom:1px solid var(--rule-hair)}
+.wire li:last-child{border-bottom:0}
+.wire .stamp{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.1em;color:var(--stamp);text-transform:uppercase;
+  display:block;margin-bottom:5px;
+}
+.wire p{margin:0;font-size:calc(var(--fs) - 2px);line-height:1.55}
+.wire strong{font-weight:700}
+
+/* ─── Котировки ─────────────────────────────────────── */
+.barometer{
+  margin-top:34px;border-top:3px double var(--ink);border-bottom:3px double var(--ink);
+  padding:18px 0;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;
+}
+.barometer div{border-left:1px solid var(--rule);padding-left:16px}
+.barometer div:first-child{border-left:0;padding-left:0}
+.barometer .fig{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:clamp(23px,2.6vw,32px);font-weight:700;line-height:1;
+  font-variant-numeric:tabular-nums;display:block;
+}
+.barometer .fig.dn{color:var(--down)}
+.barometer .fig.up{color:var(--up)}
+.barometer .cap{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-top:8px;line-height:1.5;
+}
+
+/* ─── Разделы по порядку важности ───────────────────── */
+.part{margin-top:48px;scroll-margin-top:56px}
+.part__head{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:22px;
+}
+.part__num{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:32px;font-weight:700;line-height:1;color:var(--spot);
+  font-variant-numeric:tabular-nums;
+}
+.part__title{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+}
+.part__lede{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-left:auto;
+}
+.part__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:34px}
+.part__grid > div{display:grid;gap:26px;align-content:start}
+article h4{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:calc(var(--fs) + 6px);line-height:1.18;font-weight:700;
+  margin:0 0 10px;text-wrap:balance;
+}
+article p{margin:0 0 12px;font-size:calc(var(--fs) - 1.5px);line-height:1.6;max-width:64ch}
+article p:last-child{margin-bottom:0}
+.src{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp);
+}
+.divider{border:0;border-top:1px solid var(--rule-hair);margin:0}
+
+/* ─── Возможности ───────────────────────────────────── */
+.opps{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:0 34px}
+.opp{
+  display:grid;grid-template-columns:auto 1fr;gap:0 16px;
+  padding:18px 0;border-top:1px solid var(--rule-hair);
+}
+.opp__tag{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--spot);font-weight:600;
+  border:1px solid var(--spot);padding:4px 8px;height:max-content;white-space:nowrap;
+}
+.opp h4{font-size:calc(var(--fs) + 3px);margin:0 0 6px}
+.opp p{margin:0;font-size:calc(var(--fs) - 2px);line-height:1.55}
+
+/* ─── Дедлайн возможности ───────────────────────────── */
+.opp__until{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--stamp);
+  display:inline-block;margin-left:10px;
+}
+
+/* ─── Архив ─────────────────────────────────────────── */
+.archive{margin-top:26px}
+.archive h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid var(--ink);
+}
+.archive ul{list-style:none;margin:0;padding:0}
+.archive li{
+  display:flex;gap:14px;align-items:baseline;
+  padding:6px 0;border-bottom:1px solid var(--rule-hair);
+  font-size:calc(var(--fs) - 2.5px);
+}
+.archive li:last-child{border-bottom:0}
+.archive .no{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;color:var(--stamp);white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+
+/* ─── Инсайт дня ────────────────────────────────────── */
+.insight{
+  margin-top:48px;
+  border-top:3px double var(--ink);border-bottom:3px double var(--ink);
+  padding:22px 0;
+}
+.insight h3{
+  font-family:"Old Standard TT",Georgia,serif;
+  font-size:30px;font-weight:700;margin:0 0 5px;letter-spacing:-.01em;
+}
+.insight__sub{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 20px;
+}
+.insight__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.insight__grid > div{border-left:2px solid var(--spot);padding-left:16px}
+.insight h6{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--spot);
+  margin:0 0 7px;font-weight:600;
+}
+.insight p{margin:0;font-size:calc(var(--fs) - 1.5px);line-height:1.6}
+
+/* ─── Календарь ─────────────────────────────────────── */
+.diary{
+  margin-top:34px;background:var(--panel);
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  padding:22px 24px;
+}
+.diary h3{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  margin:0 0 18px;color:var(--spot);
+}
+.diary ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.diary li{border-left:2px solid var(--spot);padding-left:14px}
+.diary .when{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  display:block;margin-bottom:6px;
+}
+.diary .what{font-size:calc(var(--fs) - 2px);line-height:1.5;display:block}
+
+/* ─── Подвал ────────────────────────────────────────── */
+.colophon{
+  margin-top:44px;padding-top:18px;border-top:3px double var(--ink);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;line-height:1.9;letter-spacing:.04em;color:var(--muted);
+}
+.colophon h3{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);
+  margin:0 0 12px;font-weight:600;
+}
+.colophon a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--rule)}
+.colophon a:hover,.colophon a:focus-visible{color:var(--spot);border-bottom-color:var(--spot)}
+.colophon .srcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:4px 26px;margin-bottom:18px}
+.note{font-style:normal;color:var(--stamp);max-width:72ch;line-height:1.8}
+:focus-visible{outline:2px solid var(--spot);outline-offset:3px}
+
+@media (max-width:900px){
+  .sheet{padding:0 18px 56px}
+  .spread{grid-template-columns:1fr;gap:30px}
+  .lead{border-right:0;padding-right:0;border-bottom:1px solid var(--rule);padding-bottom:26px}
+  .part__grid,.opps,.insight__grid{grid-template-columns:1fr;gap:26px}
+  .opps{gap:0}
+  .barometer{grid-template-columns:repeat(2,1fr);gap:18px}
+  .barometer div:nth-child(odd){border-left:0;padding-left:0}
+  .masthead__top{flex-direction:column;gap:5px;align-items:flex-start}
+  .watch li{grid-template-columns:auto 1fr}
+  .watch .next{grid-column:1/-1}
+  .part__lede{margin-left:0;flex-basis:100%}
+  .nav{gap:2px;padding:7px 0}
+  .nav a{padding:5px 7px}
+  .nav a span{display:none}
+}
+</style>
+
+<div class="sheet">
+
+  <nav class="nav" aria-label="Разделы выпуска">
+    <a href="#part1"><b>I</b><span>Мир</span></a>
+    <a href="#part2"><b>II</b><span>Финансы</span></a>
+    <a href="#part3"><b>III</b><span>Продукт</span></a>
+    <a href="#part4"><b>IV</b><span>Стартапы</span></a>
+    <a href="#part5"><b>V</b><span>Возможности</span></a>
+    <a href="#insight"><b>✦</b><span>Инсайт</span></a>
+    <button id="fs" type="button" aria-label="Переключить размер текста">Аа</button>
+  </nav>
+
+  <header class="masthead">
+    <div class="masthead__top">
+      <span>Среда · выпуск №&nbsp;002</span>
+    </div>
+    <h1>2 сентября 2026</h1>
+    <time id="issue-date" datetime="2026-09-02" hidden></time>
+  </header>
+
+  <section class="flash" aria-label="Экстренные новости">
+    <span class="flash__label">Молния</span>
+    <ul>
+      <li><time>1.09</time><span><b>США ударили по объектам КСИР — впервые за месяц затишья.</b> Иран ответил ракетами и дронами, атаки дронов зафиксировали также Кувейт и Бахрейн; Трамп предупредил об ударе «такой силы, которую ещё не видели», если Иран продолжит.</span></li>
+      <li><time>1.09</time><span><b>Три танкера атакованы в Ормузском проливе за одну ночь.</b> На саммите ШОС в Бишкеке президент Ирана Пезешкиан предложил немедленно вернуться к июньскому перемирию, если то же сделают США.</span></li>
+      <li><time>1.09</time><span><b>21 банк, включая Bank of America, Citi и Goldman Sachs, запускает совместный долларовый стейблкоин.</b> Старт — в первой половине 2027 года, следом планируется версия в евро.</span></li>
+    </ul>
+  </section>
+
+  <section class="watch" aria-label="Открытые сюжеты">
+    <h3>Слежу</h3>
+    <ul>
+      <li><b>Персидский залив</b><span class="st">Эскалация и сигнал к миру</span><span class="next">удары возобновились впервые за месяц, но Иран публично предложил вернуться к июньскому перемирию — ждём ответа Вашингтона</span></li>
+      <li><b>Ставка ФРС</b><span class="st">66%, без изменений</span><span class="next">решение на заседании 15–16 сентября, риторика ФРС пока не смягчается</span></li>
+      <li><b>Правила SEC по крипте</b><span class="st">Комментарии открыты</span><span class="next">срок — до 20 октября; параллельно в Сенате готовится голосование по Clarity Act (дата не подтверждена СМИ первого ряда)</span></li>
+      <li><b>Ротация BTC → ETH</b><span class="st">ETH лидирует, BTC догоняет</span><span class="next">приток в ETH-фонды — 11-я сессия подряд; BTC-фонды тоже вернулись к притоку после пятничного оттока</span></li>
+      <li><b>Банковский стейблкоин-альянс</b><span class="st">Объявлено</span><span class="next">21 институт готовит долларовую монету к первой половине 2027 года, затем — версия в евро</span></li>
+    </ul>
+  </section>
+
+  <div class="spread">
+    <div class="lead">
+      <h2>Новый удар по Ирану — и первое предложение о перемирии за месяц</h2>
+      <p class="deck">После месяца затишья США ударили по объектам КСИР, ночью атакованы три танкера в Ормузском проливе — а на саммите ШОС в Бишкеке президент Пезешкиан предложил вернуться к июньскому перемирию. Нефть, ставка и техбумаги реагируют на всю цепочку разом, не дожидаясь ответа Вашингтона.</p>
+      <p class="byline">Персидский залив · Bloomberg, NBC News, US News, CME FedWatch</p>
+      <div class="lead__body">
+        <p>Первого сентября Центральное командование США нанесло серию ударов по объектам Корпуса стражей исламской революции — системам ПВО, радарам, минно-заградительным средствам и узлам связи. Это первый обмен ударами за месяц затишья. Трамп назвал удар «масштабным и мощным» и объяснил его попыткой Ирана заминировать Ормузский пролив и ракетно-дроновой атакой на американскую базу в Иордании; он предупредил, что ответ Ирана получит удар «такой силы, которую ещё не видели». Иран ответил ракетами и дронами; о дроновых атаках также сообщили Кувейт и Бахрейн.</p>
+        <p>В ту же ночь в Ормузском проливе атакованы как минимум три танкера. Либерийский супертанкер Senegal Prosperity получил три попадания неизвестными снарядами — в борт, машинное отделение и балластную цистерну — в 17 морских милях от Хасаба в Омане; почти одновременно поражены саудовский и южнокорейский танкеры. По данным британского морского агентства UKMTO, жертв и разлива нефти нет.</p>
+        <p>На этом фоне на саммите ШОС в Бишкеке президент Ирана Масуд Пезешкиан заявил, что Тегеран немедленно вернётся к условиям июньского Исламабадского меморандума — прекращению ударов, открытию Ормузского пролива и снятию морской блокады, — если то же самое сделает Вашингтон. МИД Ирана уточнил: снятие блокады со стороны США — обязательное условие открытия пролива. Ответа Белого дома пока нет.</p>
+        <p>Рынок реагирует на всю цепочку разом. Нефть Brent уверенно выше $90 — источники расходятся в точной цифре (называют от $91 до $96), но сходятся в направлении. Вероятность повышения ставки ФРС на сентябрьском заседании держится на 66% — без изменений со вчерашнего дня, но и без признаков снижения на фоне подорожавшей нефти. Nasdaq потерял 1,02% — втрое больше, чем S&amp;P 500 (−0,35%), в лидерах падения чипы и техи: Marvell, Intel, Oracle и Tesla — около 3%, Alphabet — 2,21%, Nvidia — 2,03%.</p>
+      </div>
+      <p class="take"><b>Что это значит</b><span>Удар и предложение перемирия пришли в один день — обе стороны одновременно демонстрируют силу и нащупывают потолок эскалации. Пока Вашингтон не ответил, рынок торгует худший сценарий: нефть, ставка и техбумаги реагируют на цепочку залив→нефть→инфляция→ставка быстрее, чем на дипломатию, которая может её оборвать.</span></p>
+    </div>
+
+    <aside class="wire">
+      <h3>Лента</h3>
+      <ol>
+        <li>
+          <span class="stamp">1 сен · Дипломатия</span>
+          <p><strong>ШОС в Бишкеке.</strong> Си, Путин, Моди и Пезешкиан подписали декларацию к 25-летию организации; председательство на 2026–2027 годы перешло к Пакистану.</p>
+        </li>
+        <li>
+          <span class="stamp">1 сен · Ближний Восток</span>
+          <p><strong>Рейд в Газе.</strong> Израильские силы при поддержке ударов с воздуха попытались захватить главу внутренней безопасности ХАМАС; погибли не менее четырёх мирных жителей, включая детей.</p>
+        </li>
+        <li>
+          <span class="stamp">1 сен · Финансы</span>
+          <p><strong>21 банк готовит стейблкоин.</strong> Bank of America, Citi, Goldman Sachs, Wells Fargo, Deutsche Bank и другие запускают совместное предприятие; старт — в 2027 году.</p>
+        </li>
+        <li>
+          <span class="stamp">1 сен · Еврозона</span>
+          <p><strong>Инфляция ускорилась до 3,3%.</strong> Максимум с сентября 2023 года, драйвер — подорожавшая энергия (+14,3%); рынки закладывают повышение ставки ЕЦБ на ближайшем заседании.</p>
+        </li>
+        <li>
+          <span class="stamp">1 сен · Крипта</span>
+          <p><strong>ETH-ETF — 11-я сессия притоков подряд.</strong> BTC-фонды тоже вернулись к притоку после пятничного оттока в $201,9 млн.</p>
+        </li>
+        <li>
+          <span class="stamp">2 сен · Сырьё</span>
+          <p><strong>Золото просело на 1,6%,</strong> до $4 374,54 за унцию — рынок закладывает более высокую ставку ФРС.</p>
+        </li>
+      </ol>
+    </aside>
+  </div>
+
+  <section class="barometer" aria-label="Цифры дня">
+    <div><span class="fig up">&gt;$90</span><span class="cap">Brent · $91–96 в разных источниках, атаки на танкеры</span></div>
+    <div><span class="fig dn">−1,02%</span><span class="cap">Nasdaq · падение втрое сильнее, чем у S&amp;P 500</span></div>
+    <div><span class="fig dn">$77,2K</span><span class="cap">биткоин · движение суток расходится в источниках</span></div>
+    <div><span class="fig">66%</span><span class="cap">ставка ФРС · без изменений со вчерашнего дня</span></div>
+    <div><span class="fig">21</span><span class="cap">банк · совместный стейблкоин, старт в 2027</span></div>
+  </section>
+
+  <!-- ─────────── I. МИР ─────────── -->
+  <section class="part" id="part1" aria-label="Мир">
+    <div class="part__head">
+      <span class="part__num">I</span>
+      <span class="part__title">Мир</span>
+    </div>
+    <div class="part__grid">
+      <div>
+        <article>
+          <h4>ШОС в Бишкеке: альянс без Запада получил нового полпреда</h4>
+          <p>26-й саммит Шанхайской организации сотрудничества собрал в Бишкеке около 21 лидера, включая Си Цзиньпина, Владимира Путина, Нарендру Моди и Масуда Пезешкиана. Подписана Бишкекская декларация к 25-летию организации — по безопасности, борьбе с наркотрафиком, информационной безопасности и экологии. Председательство на 2026–2027 годы перешло к Пакистану. На полях саммита Путин и Си подтвердили продление безвизового режима, отдельно прошла встреча Путина с Моди.</p>
+          <p class="take"><b>Что это значит</b><span>ШОС — не альтернатива западным институтам по силе, а витрина того, где изолированным от Запада государствам есть с кем строить повестку. Смена председательства на Пакистан — сигнал о том, чьи интересы организация будет продвигать в следующем цикле.</span></p>
+          <p class="src">SCO · NBC News</p>
+        </article>
+      </div>
+      <div>
+        <article>
+          <h4>Газа: рейд обострил и без того хрупкое перемирие</h4>
+          <p>1 сентября израильские силы при поддержке авиаударов провели рейд в городе Газа, пытаясь захватить главу аппарата внутренней безопасности ХАМАС. Погибли не менее четырёх палестинцев, по разным данным — трое детей и женщина. ХАМАС обвиняет Израиль в систематическом нарушении режима прекращения огня, действующего с октября 2025 года; по данным властей Газы, с момента перемирия погибло более 1300 палестинцев.</p>
+          <p class="src">US News · Al-Monitor · Times of Israel</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Условия деэскалации в заливе: список, а не капитуляция</h4>
+          <p>Предложение Пезешкиана вернуться к перемирию не безусловное: Тегеран настаивает, что Ормузский пролив останется под ограничениями, пока США не снимут морскую блокаду, введённую в рамках эскалации. Стороны обмениваются не заявлениями о победе, а списком встречных условий — а значит, дипломатический канал, в отличие от разгара лета, всё ещё работает даже во время ударов.</p>
+          <p class="take"><b>Что это значит</b><span>Стороны, продолжающие обмениваться условиями посреди ударов, обычно не готовы к полномасштабной войне — это отличает нынешний раунд от эскалации конца лета. Но пока условия не совпали, каждая новость про Ормуз остаётся рабочим сценарием, а не отыгранным риском.</span></p>
+          <p class="src">Washington Times · Spectrum News</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── II. ФИНАНСЫ ─────────── -->
+  <section class="part" id="part2" aria-label="Финансы и рынки">
+    <div class="part__head">
+      <span class="part__num">II</span>
+      <span class="part__title">Финансы</span>
+    </div>
+    <div class="part__grid">
+      <div>
+        <article>
+          <h4>Ставка ФРС держится на 66% — риторика не смягчается</h4>
+          <p>Вероятность повышения ставки на сентябрьском заседании ФРС не изменилась со вчерашнего дня и держится на 66% по данным CME FedWatch. Основание — выступление главы ФРС Кевина Уорша в Джексон-Хоуле: он назвал темпы базовой инфляции PCE «вызывающими беспокойство» — 3,7% в годовом выражении за 12 месяцев и 4,1% за последние полгода, заметно выше цели в 2%.</p>
+          <p class="src">Forbes · CNBC · CME Group</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Нефть тянет техбумаги вниз быстрее, чем прибыль их поднимает</h4>
+          <p>Nasdaq потерял 1,02% 1 сентября — втрое больше, чем S&amp;P 500 (−0,35%). В лидерах падения — чипмейкеры и техи: Marvell, Intel, Oracle и Tesla снизились примерно на 3%, Alphabet — на 2,21%, Nvidia — на 2,03%. Нефть Brent торгуется заметно выше $90 — источники расходятся в точной цифре (от $91 до $96), но не в направлении.</p>
+          <p class="src">CNBC · Yahoo Finance · 24/7 Wall St.</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Еврозона: инфляция вышла за пределы комфорта ЕЦБ</h4>
+          <p>Инфляция в еврозоне ускорилась в августе до 3,3% с 2,9% в июле — максимум с сентября 2023 года, драйвер — подорожавшая энергия (+14,3% год к году). Базовая инфляция при этом снизилась до 2,4%. Рынки полностью закладывают повышение ставки ЕЦБ на 25 базисных пунктов, до 2,5%, на ближайшем заседании.</p>
+          <p class="src">Eurostat · CNBC · Irish Times</p>
+        </article>
+      </div>
+      <div>
+        <article>
+          <h4>Крипта: цифры расходятся, потоки — нет</h4>
+          <p>Данные по биткоину и эфиру за 1 сентября противоречивы: одни источники фиксируют падение обеих монет на фоне инфляционных опасений, другие — рост на 1–2%. Точную цену и направление суточного движения указать нельзя — расхождение зафиксировано и не устранено. Зато данные по ETF расходятся меньше: приток в фонды на эфир растянулся до 11-й сессии подряд, а фонды на биткоин после пятничного оттока в $201,9 млн два дня подряд получали новые деньги — $216,7 млн и $142 млн.</p>
+          <p class="take"><b>Что это значит</b><span>Ротация капитала в пользу эфира продолжается по темпам, но нарратив «деньги бегут из биткоина» на сегодня устарел — приток идёт в оба актива, просто в эфир быстрее.</span></p>
+          <p class="src">CoinDesk · HedgeCo · NewsBTC</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>21 банк формирует альянс вокруг долларового стейблкоина</h4>
+          <p>Bank of America, Citi, Goldman Sachs, Wells Fargo, Deutsche Bank, UBS, Santander, MUFG и ещё более десятка институтов объявили о совместном предприятии по выпуску долларового стейблкоина; запуск ориентировочно в первой половине 2027 года, следующий шаг — версия в евро. Параллельно Минфин США принимает публичные комментарии к правилам GENIUS Act о трансграничной деятельности эмитентов стейблкоинов — до 19 октября.</p>
+          <p class="take"><b>Что это значит</b><span>Когда за одним стейблкоином выстраивается очередь из системно значимых банков, а не только крипто-нативных эмитентов, регулируемая цифровая доллар-инфраструктура перестаёт быть нишевой ставкой — банки готовятся конкурировать за неё друг с другом.</span></p>
+          <p class="src">Yahoo Finance · Daily Hodl · FDIC</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── III. ПРОДУКТ ─────────── -->
+  <section class="part" id="part3" aria-label="Продукт и проекты">
+    <div class="part__head">
+      <span class="part__num">III</span>
+      <span class="part__title">Продукт</span>
+    </div>
+    <div class="part__grid">
+      <div>
+        <article>
+          <h4>Использование ИИ почти всеобщее — результат нет</h4>
+          <p>По разным опросам, от 69% до 96% продакт-менеджеров регулярно используют ИИ в работе — расхождение зависит от методологии (Product Focus против ProductPlan/Product-Led Alliance). Но измеримое улучшение результатов признают куда меньше — от 29% до 64% в зависимости от исследования, а 85% PM говорят, что всегда перепроверяют выдачу ИИ собственной экспертизой. Известный ориентир, до сих пор актуальный как точка сравнения (исследование MIT NANDA, 2025 год): 95% корпоративных пилотов генеративного ИИ не дали измеримой финансовой отдачи.</p>
+          <p class="take"><b>Что это значит</b><span>Разрыв между использованием и результатом — не временный лаг внедрения, а устойчивая черта рынка. Ценность создаёт не факт использования ИИ, а дисциплина его встраивания в конкретный процесс — и именно этого большинству команд пока не хватает.</span></p>
+          <p class="src">Product Focus · ProductPlan · MIT NANDA</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Роль PM сжимается снизу и растёт наверху одновременно</h4>
+          <p>По двум независимым трекерам увольнений (SkillSyncer и Layoffs.fyi), в 2026 году ИИ и автоматизацию называют причиной 54–56% сокращений — риторика резко ускорилась с ~7% в январе до ~40% к маю. При этом Alphabet, Microsoft, Meta и Amazon планируют потратить в 2026 году совокупно около $700 млрд на ИИ-инфраструктуру — штат сокращают и капзатраты на ИИ наращивают одновременно. Число открытых вакансий PM тем временем выросло на 14% год к году, а продакты с подтверждённым опытом в ИИ получают премию 15–20% к зарплате на любом уровне.</p>
+          <p>Отдельно: громкий, но независимо не подтверждённый тезис одного опроса (Products That Count и Mighty Capital, май 2026) — классическая роль PM исчезнет к 2030 году, уступив гибриду «Product Builder»; цифры о десятикратном росте гибридных ролей и падении классических вакансий на 30–70% взяты из единственного источника.</p>
+          <p class="src">SkillSyncer · Layoffs.fyi · Axial Search</p>
+        </article>
+      </div>
+      <div>
+        <article>
+          <h4>Урок месяца: Plex откатывает редизайн после года критики</h4>
+          <p>Почти год Plex получал жёсткую негативную обратную связь на редизайн TV-приложения (Apple TV, Roku, Android TV, Fire TV), где убрали привычную боковую навигацию. 18 августа компания выпустила превью-обновление: вернула боковую панель, сделав её сворачиваемой, и избранные библиотеки — как элементы верхнего уровня.</p>
+          <p class="take"><b>Что это значит</b><span>Негативный сигнал был устойчивым с самого запуска, но полноценный откат занял месяцы публичного давления — потому что решение принималось без встроенного механизма быстрой проверки и отката. Изменения в основной навигации крупных продуктов стоит тестировать поэтапно с чёткими метриками отказа, а не полагаться на «пользователи привыкнут».</span></p>
+          <p class="src">Neowin · Android Authority · XDA Developers</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Инструменты: агенты берут на себя рутину</h4>
+          <p>Linear научил coding-агентов самостоятельно настраивать окружение, тестировать код и запускаться из мобильного приложения; у инициатив появился явный ответственный владелец. Notion добавил измерение расхода ИИ-квоты, прямую передачу документов агенту и встроенные ИИ-чаты внутри страниц. Amplitude продвигает «Global Agent», который анализирует продуктовые данные и эксперименты как аналитик — по собственным данным компании, 76% обращений закрывается без участия человека.</p>
+          <p class="src">Linear Changelog · Notion · Amplitude</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── IV. СТАРТАПЫ ─────────── -->
+  <section class="part" id="part4" aria-label="Стартапы и инновации">
+    <div class="part__head">
+      <span class="part__num">IV</span>
+      <span class="part__title">Стартапы</span>
+    </div>
+    <div class="part__grid">
+      <div>
+        <article>
+          <h4>Instinct: с $50 млн до $2,5 млрд за четыре месяца</h4>
+          <p>Персональный ИИ-агент Instinct привлёк Series B на $250 млн при оценке $2,5 млрд — совокупное финансирование компании выросло до $350 млн. Со-лидеры раунда — Index Ventures и Benchmark, участвовали Conviction и Greenoaks. Оценка выросла в пятьдесят раз всего за четыре месяца — один из самых резких скачков сезона.</p>
+          <p class="take"><b>Что это значит</b><span>Такой темп переоценки типичен не для устойчивого роста метрик, а для гонки инвесторов за местом в раунде — Forbes прямо называет происходящее вокруг персональных ИИ-агентов «инвесторским безумием».</span></p>
+          <p class="src">TechCrunch · Forbes</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Félix: WhatsApp-финтех для мигрантов вырос до $1,4 млрд</h4>
+          <p>Платформа денежных переводов, кредитов и сбережений внутри WhatsApp для латиноамериканских мигрантов в США привлекла Series C на $200 млн — $87 млн акционерным капиталом и $113 млн долгом от General Catalyst Customer Value Fund. Оценка выросла до $1,4 млрд с $484,5 млн после Series B. Со-лидеры — a16z и General Catalyst.</p>
+          <p class="src">Crunchbase News · Bloomberg</p>
+        </article>
+      </div>
+      <div>
+        <article>
+          <h4>Tripo AI: китайский капитал разворачивается к 3D</h4>
+          <p>Пекинский разработчик 3D-native моделей для генеративного контента привлёк около 3 млрд юаней (примерно $445 млн) в рамках Series B и B+, получив статус юникорна. Лид — MPCi, в раунде участвуют Perfect World, BlueFocus, CICC и CMC Capital Partners. Точная оценка компании не раскрыта.</p>
+          <p class="src">FinSMEs · PR Newswire</p>
+        </article>
+        <hr class="divider">
+        <article>
+          <h4>Венчурный капитал разворачивается к физическому слою ИИ</h4>
+          <p>Andreessen Horowitz запустил Machine Age Fund на $1,1 млрд — под чипы, память, сети, энергетику и роботов; несколькими днями позже growth-фонд a16z вырос до $8,5 млрд. По данным PitchBook, корпоративные инвесторы обеспечили рекордные 87,9% стоимости всех ИИ-сделок в США в 2026 году, а 19 стартапов уже преодолели отметку в $10 млрд оценки.</p>
+          <p class="take"><b>Что это значит</b><span>Капитал стягивается к узкому кругу мега-раундов и к инфраструктурному, а не программному слою — тому же вектору, о котором вчера говорил раунд Emerald AI под управление энергопотреблением дата-центров. Тренд не новый, но за неделю получил собственный выделенный фонд.</span></p>
+          <p class="src">TechCrunch · PitchBook</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── V. ВОЗМОЖНОСТИ ─────────── -->
+  <section class="part" id="part5" aria-label="Возможности">
+    <div class="part__head">
+      <span class="part__num">V</span>
+      <span class="part__title">Возможности</span>
+    </div>
+    <div class="opps">
+      <div class="opp">
+        <span class="opp__tag">Дефицит</span>
+        <div>
+          <h4>Физическая инфраструктура ИИ</h4>
+          <p>Запуск отдельного фонда a16z на $1,1 млрд под чипы, энергетику и роботов — сигнал, что дефицит сместился с моделей на физический слой: вычисления, энергию, сети. Ценность утекает туда, где предложение объективно не поспевает за спросом, а не туда, где громче маркетинг.</p>
+        </div>
+      </div>
+      <div class="opp">
+        <span class="opp__tag">Окно</span>
+        <div>
+          <h4>Комментарии к трансграничным правилам GENIUS Act<span class="opp__until">до 19 октября</span></h4>
+          <p>Минфин США принимает публичные комментарии к правилам о трансграничной деятельности эмитентов стейблкоинов, пока 21 банк уже готовит собственный проект. Формирующиеся правила ещё можно увидеть до их окончательного принятия — редкое окно для тех, кто следит за инфраструктурой цифрового доллара.</p>
+        </div>
+      </div>
+      <div class="opp">
+        <span class="opp__tag">Навык</span>
+        <div>
+          <h4>Гибрид продакт + инженер в цене</h4>
+          <p>Продакты с подтверждённым опытом в ИИ получают премию 15–20% к зарплате на любом уровне, а вакансии AI PM растут стабильным темпом — около 714 постингов в неделю при медианной зарплате $195 тыс. Спрос обгоняет предложение специалистов, которые одновременно понимают продукт и умеют говорить на языке модели.</p>
+        </div>
+      </div>
+      <div class="opp">
+        <span class="opp__tag">Ниша</span>
+        <div>
+          <h4>Персональные ИИ-агенты как отдельная категория</h4>
+          <p>Оценка Instinct выросла в пятьдесят раз за четыре месяца — признак того, что персональный ИИ-ассистент выделяется в самостоятельную категорию продукта, а не остаётся функцией внутри других приложений. Ниша ещё не устоялась в форме и лидерах — то есть открыта.</p>
+        </div>
+      </div>
+      <div class="opp">
+        <span class="opp__tag">Горизонт</span>
+        <div>
+          <h4>3D-генеративные модели после LLM-бума</h4>
+          <p>Статус юникорна у китайской Tripo AI — сигнал, что капитал в генеративном ИИ ищет следующий слой поверх текста и изображений: 3D-контент для игр, промышленного дизайна и метавселенных. Горизонт — три-пять лет до зрелости инструментов уровня сегодняшних текстовых моделей.</p>
+        </div>
+      </div>
+      <div class="opp">
+        <span class="opp__tag">Рано</span>
+        <div>
+          <h4>Квантовые чипы становятся совместимы с серийным производством</h4>
+          <p>Учёные Cornell снизили температуру осаждения тантала для сверхпроводящих кубитов с 400°C+ до 200°C, заменив аргон на криптон — это делает процесс совместимым с обычным полупроводниковым производством. Публикация в Nature Materials, до коммерческого применения — годы, но именно на этой стадии дешевле всего разобраться в теме.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="insight" id="insight" aria-label="Инсайт дня">
+    <h3>Инсайт дня</h3>
+    <div class="insight__grid">
+      <div>
+        <h6>Рынок торгует эскалацию быстрее, чем дипломатию</h6>
+        <p>Удар по объектам КСИР и предложение Пезешкиана вернуться к перемирию пришли в один день — но ставка ФРС держится на 66%, Nasdaq падает, а Brent растёт так, будто дипломатического трека не существует. Рынок торгует худший сценарий, потому что его последствия наступают быстрее, чем результат переговоров, которых ещё не было.</p>
+      </div>
+      <div>
+        <h6>Капитал уходит от софта к физическому слою</h6>
+        <p>Отдельный фонд a16z под чипы и энергетику, статус юникорна у 3D-инфраструктуры Tripo AI и криптоновый прорыв Cornell в производстве квантовых чипов — три разных сюжета недели говорят одно: следующая волна ценности строится не поверх моделей, а под ними — в железе, энергии и материалах.</p>
+      </div>
+      <div>
+        <h6>Разрыв между использованием и результатом стал нормой</h6>
+        <p>От 69% до 96% продактов используют ИИ, но измеримую пользу признают меньше половины; 54–56% увольнений называют причиной ИИ — и одновременно растёт премия за тех, кто умеет довести внедрение до результата. Похожий паттерн в финансах: 21 банк готов вложиться в стейблкоин-инфраструктуру, которая окупится не раньше 2027 года. Ценность сегодня достаётся не тем, кто использует новую технологию первым, а тем, кто доводит её до конца.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="diary">
+    <h3>В календарь</h3>
+    <ul>
+      <li><span class="when">15–16 сентября</span><span class="what">Заседание ФРС — рынок закладывает 66% на повышение ставки. Главное событие месяца для всех риск-активов.</span></li>
+      <li><span class="when">9 сентября</span><span class="what">Презентация Apple: iPhone 18 Pro и складной iPhone Ultra — первый крупный публичный релиз при новом CEO.</span></li>
+      <li><span class="when">До 19 октября</span><span class="what">Комментарии к трансграничным правилам GENIUS Act по стейблкоинам — окно, пока 21 банк уже готовит собственный проект.</span></li>
+      <li><span class="when">До 20 октября</span><span class="what">Комментарии к SEC Regulation Crypto Assets — формируется финальная редакция режима размещения криптоактивов.</span></li>
+    </ul>
+  </section>
+
+  <section class="archive" aria-label="Архив выпусков">
+    <h3>Архив</h3>
+    <ul>
+      <li><span class="no">№ 001 · 1 сен</span><span>Ормузский пролив теперь определяет ставку ФРС</span></li>
+    </ul>
+  </section>
+
+  <!-- Архив: со следующего выпуска добавляй сюда строку сверху:
+       <li><span class="no">№ 002 · 2 сен</span><span>Новый удар по Ирану — и первое предложение о перемирии за месяц</span></li>
+       Храни последние 7 строк, старые снизу удаляй. Секцию показывай, только когда есть хотя бы одна строка. -->
+
+  <footer class="colophon">
+    <h3>Источники</h3>
+    <div class="srcs">
+      <a href="https://www.bloomberg.com/news/articles/2026-09-01/us-launches-new-round-of-iran-strikes-as-strait-tensions-grow">Bloomberg — новые удары США по Ирану</a>
+      <a href="https://www.nbcnews.com/world/iran/us-launched-large-powerful-strikes-iran-trump-says-rcna595581">NBC News — заявление Трампа об ударах</a>
+      <a href="https://www.usnews.com/news/world/articles/2026-09-01/us-says-its-hitting-targets-in-iran-as-hostilities-flare-again-after-month-with-no-military-action">US News — эскалация после месяца затишья</a>
+      <a href="https://english.alarabiya.net/News/middle-east/2026/09/01/tanker-hit-by-3-unknown-projectiles-in-hormuz-strait-uk-maritime-agency">Al Arabiya — атака на танкер в Ормузе</a>
+      <a href="https://www.seatrade-maritime.com/security/tanker-struck-three-times-in-strait-of-hormuz">Seatrade Maritime — три попадания по танкеру</a>
+      <a href="https://spectrumlocalnews.com/us/snplus/international/2026/09/01/iran-s-president-ceasefire-agreement-return">Spectrum News — предложение Пезешкиана</a>
+      <a href="https://www.washingtontimes.com/news/2026/sep/1/iranian-president-pezeshkian-says-tehran-would-adhere-ceasefire-pact/">Washington Times — условия Тегерана</a>
+      <a href="https://eng.sectsco.org/20260901/2493609.html">SCO — Бишкекская декларация</a>
+      <a href="https://www.nbcnews.com/world/asia/leaders-china-russia-india-meet-counter-us-influence-rcna595473">NBC News — саммит ШОС в Бишкеке</a>
+      <a href="https://www.usnews.com/news/world/articles/2026-09-01/israeli-fire-kills-four-people-including-three-children-in-gaza-medics-say">US News — рейд в Газе</a>
+      <a href="https://www.al-monitor.com/originals/2026/09/israeli-strikes-kill-four-operation-seize-hamas-figure-gaza-officials">Al-Monitor — операция в Газе</a>
+      <a href="https://www.forbes.com/sites/digital-assets/2026/08/31/cme-fedwatch-provides-a-66-chance-fed-will-hike-rates-in-september/">Forbes — CME FedWatch, 66%</a>
+      <a href="https://www.cnbc.com/2026/08/31/markets-see-warsh-endorsing-a-rate-hike-in-september-not-everyone-is-convinced.html">CNBC — риторика Уорша</a>
+      <a href="https://www.cnbc.com/2026/08/31/stock-market-today-live-updates.html">CNBC — рынок 1 сентября</a>
+      <a href="https://247wallst.com/cards/the-nasdaq-s-1-02-slide-was-triple-the-s-p-500-s-loss-so-t-gspc-market-bell-01m1f95kv8c17b0rdk9z8mq85y">24/7 Wall St. — падение Nasdaq</a>
+      <a href="https://finance.yahoo.com/energy/articles/oil-prices-surge-above-94-173653702.html">Yahoo Finance — скачок нефти</a>
+      <a href="https://www.coindesk.com/business/2026/09/01/live-updates-bitcoin-etfs-resume-buying-as-ether-funds-stretch-streak-to-11-days">CoinDesk — потоки в крипто-ETF</a>
+      <a href="https://hedgeco.net/news/09/2026/spot-bitcoin-etfs-took-in-216-7-million-on-august-31-reversing-fridays-outflow.html">HedgeCo — приток в BTC-ETF</a>
+      <a href="https://finance.yahoo.com/markets/crypto/articles/wells-bofa-citi-back-upcoming-122257604.html">Yahoo Finance — банки и стейблкоин</a>
+      <a href="https://dailyhodl.com/2026/09/01/bank-of-america-wells-fargo-citi-and-goldman-join-21-firm-plan-to-launch-stablecoin/">The Daily Hodl — 21 банк</a>
+      <a href="https://www.fdic.gov/news/financial-institution-letters/2026/notice-proposed-rulemaking-establish-genius-act">FDIC — правила GENIUS Act</a>
+      <a href="https://www.sec.gov/newsroom/press-releases/2026-76-sec-proposes-new-regulation-crypto-assets">SEC — Regulation Crypto Assets</a>
+      <a href="https://ec.europa.eu/eurostat/en/web/products-euro-indicators/w/2-01092026-ap">Eurostat — инфляция еврозоны</a>
+      <a href="https://www.irishtimes.com/business/2026/09/01/euro-area-inflation-jumps-to-33-paving-way-for-ecb-rate-hike/">Irish Times — курс на повышение ставки ЕЦБ</a>
+      <a href="https://www.forbes.com/advisor/investing/gold-price/">Forbes Advisor — цена золота</a>
+      <a href="https://cdn.productfocus.com/wp/wp-content/uploads/2026/03/Product-Focus-Industry-Survey-Report-2026.pdf">Product Focus — опрос индустрии</a>
+      <a href="https://www.productplan.com/ebooks/the-state-of-product-management-report-2026">ProductPlan — State of Product Management</a>
+      <a href="https://blog.theinterviewguys.com/56-of-2026-layoffs-now-blame-ai-but-the-companies-cutting-jobs-are-the-same-ones-spending-billions-on-it/">Interview Guys — увольнения и ИИ</a>
+      <a href="https://axialsearch.com/insights/ai-product-jobs">Axial Search — вакансии AI PM</a>
+      <a href="https://www.prnewswire.com/news-releases/2026-cpo-insights-report-predicts-product-managers-will-disappear-by-2030-302782732.html">PR Newswire — прогноз о роли PM</a>
+      <a href="https://www.neowin.net/news/plex-reverts-tv-app-layout-after-intense-user-backlash/">Neowin — откат редизайна Plex</a>
+      <a href="https://www.androidauthority.com/plex-brings-back-left-side-menu-3700033/">Android Authority — возврат навигации Plex</a>
+      <a href="https://linear.app/changelog/2026-08-20-coding-environments">Linear Changelog — агенты в Linear</a>
+      <a href="https://amplitude.com/press/amplitude-introduces-agentic-ai-analytics-for-the-next-era-of-product-experiences">Amplitude — Global Agent</a>
+      <a href="https://techcrunch.com/2026/08/26/viral-ai-startup-instinct-has-raised-350-million-at-a-2-5-billion-valuation/">TechCrunch — раунд Instinct</a>
+      <a href="https://www.forbes.com/sites/iainmartin/2026/08/26/vcs-are-so-obsessed-with-this-ai-assistant-that-its-valuation-jumped-fivefold-in-weeks/">Forbes — ажиотаж вокруг Instinct</a>
+      <a href="https://news.crunchbase.com/venture/fintech-whatsapp-remittance-startup-felix-raises-200m-a16z-general-catalyst/">Crunchbase News — раунд Félix</a>
+      <a href="https://www.bloomberg.com/news/articles/2026-09-01/felix-pago-raises-200-million-to-expand-into-financial-services">Bloomberg — Félix Pago</a>
+      <a href="https://www.finsmes.com/2026/09/tripo-ai-raises-approx-446m-in-series-b-funding.html">FinSMEs — раунд Tripo AI</a>
+      <a href="https://techcrunch.com/2026/08/28/a16z-creates-a-1-1b-machine-age-fund-to-accelerate-the-physical-buildout-of-ai/">TechCrunch — Machine Age Fund</a>
+      <a href="https://pitchbook.com/news/reports/q3-2026-fewer-deals-bigger-bets-how-corporate-capital-is-concentrating-us-ai-venture-activity">PitchBook — концентрация ИИ-капитала</a>
+      <a href="https://news.cornell.edu/stories/2026/08/new-ingredient-quantum-computing-krypton-gas">Cornell Chronicle — криптон для квантовых чипов</a>
+    </div>
+    <p class="note">Котировки — на момент, указанный в источнике; по нефти и крипте цифры расходятся между источниками, диапазон указан явно. Обзор рынка, не инвестиционная рекомендация.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('fs');
+  function apply(v){
+    root.setAttribute('data-size', v);
+    btn.textContent = v === 'l' ? 'Аа −' : 'Аа +';
+    btn.title = v === 'l' ? 'Вернуть обычный размер' : 'Увеличить текст';
+    try{ localStorage.setItem('vestnik-size', v); }catch(e){}
+  }
+  var saved='m';
+  try{ saved = localStorage.getItem('vestnik-size') || 'm'; }catch(e){}
+  apply(saved === 'l' ? 'l' : 'm');
+  btn.addEventListener('click', function(){
+    apply(root.getAttribute('data-size') === 'l' ? 'm' : 'l');
+  });
+})();
+
+// Автообновление: если на странице вчерашний выпуск, перезагружаемся мимо кэша.
+(function(){
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  var MONTHS={'января':1,'февраля':2,'марта':3,'апреля':4,'мая':5,'июня':6,
+              'июля':7,'августа':8,'сентября':9,'октября':10,'ноября':11,'декабря':12};
+  function issueDate(){
+    // главный источник — дата в заголовке: она обновляется в каждом выпуске
+    var h=document.querySelector('.masthead h1');
+    if(h){
+      var t=h.textContent.trim().toLowerCase().split(/\s+/);
+      if(t.length===3 && MONTHS[t[1]] && /^\d{4}$/.test(t[2]) && /^\d{1,2}$/.test(t[0]))
+        return t[2]+'-'+pad(MONTHS[t[1]])+'-'+pad(+t[0]);
+    }
+    var el=document.getElementById('issue-date');
+    return el ? el.getAttribute('datetime') : null;
+  }
+  function fresh(){
+    var issue=issueDate();
+    if(!issue) return;
+    var now=new Date();
+    if(now.getHours() < 8) return; // до 8 утра выпуск ещё может собираться
+    var today=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+    if(issue >= today) return;     // выпуск сегодняшний — ничего не делаем
+    var last=0;
+    try{ last=+sessionStorage.getItem('vestnik-reload')||0; }catch(e){}
+    if(Date.now()-last < 10*60*1000) return; // не чаще раза в 10 минут
+    try{ sessionStorage.setItem('vestnik-reload', String(Date.now())); }catch(e){}
+    var go=function(){ location.reload(); };
+    try{ fetch(location.href,{cache:'reload'}).then(go,go); }catch(e){ go(); }
+  }
+  fresh();
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) fresh(); });
+})();
+</script>
+
